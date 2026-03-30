@@ -1,14 +1,13 @@
 ```
-
-     ██████  ██ ████████ ████████ ██    ██ ▄█████ ████████ ██████
-     ██   ██ ██ ██       ██       ██    ██ ▀▀▀▄▄▄ ██       ██   ██
-     ██   ██ ██ ██████   ██████   ██    ██ █████▀ ██████   ██████
-     ██   ██ ██ ██       ██       ██    ██       █ ██       ██  ██
-     ██████  ██ ██       ██        ██████  ██████▀ ████████ ██   ██
-
+██████╗ ██╗███████╗███████╗██╗   ██╗███████╗███████╗██████╗ 
+██╔══██╗██║██╔════╝██╔════╝██║   ██║██╔════╝██╔════╝██╔══██╗
+██║  ██║██║█████╗  █████╗  ██║   ██║███████╗█████╗  ██████╔╝
+██║  ██║██║██╔══╝  ██╔══╝  ██║   ██║╚════██║██╔══╝  ██╔══██╗
+██████╔╝██║██║     ██║     ╚██████╔╝███████║███████╗██║  ██║
+╚═════╝ ╚═╝╚═╝     ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝ 
 ```
 
-CriticMarkup-aware markdown viewer for the terminal.
+CriticMarkup viewer for the terminal.
 
 ## Getting Started
 
@@ -30,7 +29,7 @@ Given a markdown file with CriticMarkup annotations:
 
 ```markdown
 The system processed the data and {~~returned results to~>delivered results
-back to~~} the user.{>>"Delivered back" is more active and specific.<<}
+back to~~} the user.
 ```
 
 Render it in the terminal with color-coded annotations:
@@ -41,25 +40,28 @@ diffuser view my-document.md
 
 ## Background & Rationale
 
-When AI agents suggest changes to writing, they typically rewrite the whole
-file. The original is gone. If you disagree with one sentence, tough luck --
-you're diffing walls of prose in a terminal.
+Writing blog posts in markdown is straightforward until you start editing.
+You change a sentence, rewrite a paragraph, cut a section. The next morning,
+you're not sure what you changed or why. Git solves this for code, but
+version control for prose is a different problem. You don't want branches
+and merge conflicts for a blog post. You want to see what changed, right
+there in the text.
 
-CriticMarkup solves this. It's a plain-text syntax for editorial annotations
-that sits inside the document without destroying what was already there.
-`{++add this++}`, `{--remove this--}`, `{~~old~>new~~}` -- five simple
-marks that let an agent suggest changes while preserving every word of the
-original.
+Fletcher Penney saw this clearly. Penney is the creator of
+[MultiMarkdown](https://fletcherpenney.net/multimarkdown/). He has spent
+years building tools for writers who think in plain text. Together with Gabe
+Weatherhead, he created [CriticMarkup](http://criticmarkup.com): five
+simple inline annotations that track changes without leaving the document.
+`{++add this++}`, `{--remove this--}`, `{~~old~>new~~}`. No external
+tooling. No version control. Just the text.
 
-What was missing was a way to view these annotations clearly from the
-command line. Rich terminal rendering, color-coded by change type, without
-leaving the shell. That's what diffuser does.
+The idea was brilliant. I just needed it in the terminal. That's diffuser.
 
 ## How It Works
 
 diffuser preprocesses CriticMarkup syntax into Rich markup, then delegates
 all markdown rendering to the `rich` library. No custom HTML parser, no
-browser -- just your terminal.
+browser. Just your terminal.
 
 ### CriticMarkup Syntax
 
@@ -112,3 +114,16 @@ uv run diffuser view my-document.md
 ```bash
 uv run pytest
 ```
+
+### Releasing
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+## Credits
+
+CriticMarkup was created by [Fletcher Penney](https://fletcherpenney.net/)
+and [Gabe Weatherhead](http://macdrifter.com). Full specification at
+[criticmarkup.com](http://criticmarkup.com/spec.php).

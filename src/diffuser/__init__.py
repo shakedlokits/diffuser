@@ -1,6 +1,7 @@
-"""diffuser -- CriticMarkup-aware markdown viewer for the terminal."""
+"""diffuser -- CriticMarkup viewer for the terminal."""
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -8,10 +9,43 @@ from diffuser.parse import prepare
 from diffuser.render import render
 from diffuser.skill import get_skill_content
 
+_BANNER = r"""
+ ██████╗ ██╗███████╗███████╗██╗   ██╗███████╗███████╗██████╗
+ ██╔══██╗██║██╔════╝██╔════╝██║   ██║██╔════╝██╔════╝██╔══██╗
+ ██║  ██║██║█████╗  █████╗  ██║   ██║███████╗█████╗  ██████╔╝
+ ██║  ██║██║██╔══╝  ██╔══╝  ██║   ██║╚════██║██╔══╝  ██╔══██╗
+ ██████╔╝██║██║     ██║     ╚██████╔╝███████║███████╗██║  ██║
+ ╚═════╝ ╚═╝╚═╝     ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝
+"""
+
+
+def _version_callback(value: bool) -> None:
+    if value:
+        from diffuser._version import __version__
+
+        typer.echo(f"diffuser {__version__}")
+        raise typer.Exit()
+
+
 app = typer.Typer(
-    help="Render markdown with CriticMarkup annotations in the terminal.",
+    help=_BANNER + "\n CriticMarkup viewer for the terminal.",
+    epilog="Made by Shaked Lokits. https://github.com/shakedlokits/diffuser",
     no_args_is_help=True,
 )
+
+
+@app.callback()
+def _main_callback(
+    version: Optional[bool] = typer.Option(
+        None,
+        "--version",
+        "-v",
+        callback=_version_callback,
+        is_eager=True,
+        help="Show version and exit.",
+    ),
+) -> None:
+    pass
 
 
 @app.command()
