@@ -57,41 +57,14 @@ tooling. No version control. Just the text.
 
 The idea was brilliant. I just needed it in the terminal. That's diffuser.
 
-## How It Works
-
-diffuser preprocesses CriticMarkup syntax into Rich markup, then delegates
-all markdown rendering to the `rich` library. No custom HTML parser, no
-browser. Just your terminal.
-
-### CriticMarkup Syntax
-
-| Syntax | Meaning |
-|---|---|
-| `{++text++}` | Insertion |
-| `{--text--}` | Deletion |
-| `{~~old~>new~~}` | Substitution |
-| `{==text==}` | Highlight |
-| `{>>text<<}` | Comment |
-
-Full specification: http://criticmarkup.com/spec.php
-
 ## Agent Skill
 
-diffuser ships with a skill that teaches AI agents how to use CriticMarkup
-when editing your writing. Install it with the [skills CLI](https://skills.sh):
+If you want to use an agent to help you with writing, there's a skill to
+guide it on how to use CriticMarkup when suggesting changes:
 
 ```bash
 npx skills add shakedlokits/diffuser
 ```
-
-Or view the skill content directly:
-
-```bash
-diffuser skill
-```
-
-The skill instructs the agent to annotate files in-place using CriticMarkup
-syntax, never deleting or replacing original text directly.
 
 ## Development
 
