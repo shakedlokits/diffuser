@@ -33,8 +33,7 @@ wheels = [
 ]
 
 [[package]]
-name = "diffuser"
-version = "0.1.0"
+name = "diffuser-cli"
 source = { editable = "." }
 dependencies = [
     { name = "rich" },
