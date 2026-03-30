@@ -1,0 +1,41 @@
+[project]
+name = "diffuser-cli"
+dynamic = ["version"]
+description = "CriticMarkup-aware markdown viewer for the terminal"
+readme = "README.md"
+authors = [
+    { name = "shaked-lokits", email = "shakedl@salt.security" }
+]
+requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+dependencies = [
+    "rich>=14.3.3",
+    "typer>=0.24.1",
+]
+
+[project.scripts]
+diffuser = "diffuser:main"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/diffuser/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/diffuser"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"skills/diffuser/SKILL.md" = "diffuser/SKILL.md"
+
+[tool.hatch.build.targets.sdist.force-include]
+"skills" = "skills"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
